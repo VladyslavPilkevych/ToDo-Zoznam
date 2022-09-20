@@ -1,0 +1,15 @@
+@import "../../assets/styles/global.module";
+
+.todoTaskContainer {
+  width: 100%;
+  background-color: #EDF5E1;
+}
+
+.taskText {
+  @include fonts("Poppins", 20px, $black, 400);
+}
+
+.taskTextChecked {
+  text-decoration: line-through;
+  color: $grey;
+}

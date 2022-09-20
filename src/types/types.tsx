@@ -7,15 +7,21 @@ export interface IDate {
 }
 
 export interface INewTaskSchemaTS {
-    title: string;
-    text: string;
-    date: Date;
+  title: string;
+  text: string;
+  date: Date;
 }
 
 export interface ITodo {
-    id: number;
-    title: string;
-    text: string;
-    date: IDate;
-    completed: boolean;
+  id: number;
+  title: string;
+  text: string;
+  date: IDate;
+  completed: boolean;
+}
+
+export interface ITodosState {
+  todos: {
+    allTodos: ITodo[];
+  }
 }

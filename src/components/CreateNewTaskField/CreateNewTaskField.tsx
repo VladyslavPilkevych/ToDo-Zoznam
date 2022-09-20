@@ -49,24 +49,26 @@ const CreateNewTaskField: FC = () => {
       dayjs(value).get('hour'),
       dayjs(value).get('minute')
     );
-    // console.log(formik.values.title);
-    // console.log(formik.values.text);
-    const newTodo: ITodo = {
-      id: dayjs(value).get('minute'),
-      title: formik.values.title,
-      text: formik.values.text,
-      date: {
-        month: dayjs(value).get('month'),
-        date: dayjs(value).get('date'),
-        year: dayjs(value).get('year'),
-        hour: dayjs(value).get('hour'),
-        minute: dayjs(value).get('minute'),
-      },
-      completed: false,
-    };
-    dispatch(createNewTodo(newTodo));
-    console.log(newTodo);
-    setValue(dayjs(new Date()));
+    console.log(formik.values.title);
+    console.log(formik.values.text);
+    if (/\S/.test(formik.values.title) && /\S/.test(formik.values.text)) {
+      const newTodo: ITodo = {
+        id: dayjs(value).get('minute'),
+        title: formik.values.title,
+        text: formik.values.text,
+        date: {
+          month: dayjs(value).get('month'),
+          date: dayjs(value).get('date'),
+          year: dayjs(value).get('year'),
+          hour: dayjs(value).get('hour'),
+          minute: dayjs(value).get('minute'),
+        },
+        completed: false,
+      };
+      dispatch(createNewTodo(newTodo));
+      console.log(newTodo);
+      setValue(dayjs(new Date()));
+    }
   };
   return (
     <div className={styles.createNewTaskContainer}>
