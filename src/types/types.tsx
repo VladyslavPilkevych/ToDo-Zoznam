@@ -6,15 +6,16 @@ export interface IDate {
   minute: number;
 }
 
-// export interface IUser {
-//   id: number;
-//   name: string;
-//   email: string;
-//   address: IAddress;
-// }
+export interface INewTaskSchemaTS {
+    title: string;
+    text: string;
+    date: Date;
+}
 
-// export interface ITodo {
-//   id: number;
-//   title: string;
-//   completed: boolean;
-// }
+export interface ITodo {
+    id: number;
+    title: string;
+    text: string;
+    date: IDate;
+    completed: boolean;
+}

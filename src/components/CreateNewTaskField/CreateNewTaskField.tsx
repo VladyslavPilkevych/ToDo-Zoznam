@@ -1,4 +1,5 @@
-import React, { FC, memo, useState } from 'react';
+import React, { FC, memo, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import dayjs, { Dayjs } from 'dayjs';
 import { useFormik, FormikHelpers as FormikActions } from 'formik';
 import * as yup from 'yup';
@@ -8,64 +9,39 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Button from '@mui/material/Button';
 import styles from './CreateNewTaskField.module.scss';
+import { ITodo, INewTaskSchemaTS } from '../../types/types';
+import { createNewTodo } from '../../store/actionCreators/todosAC';
 
 type dateTypeJS = Date | Dayjs | null;
-// type dateType = Date | null;
-type dateType = Date;
 
-interface newTaskSchemaTS {
-  title: string;
-  text: string;
-  date: dateType;
-}
-
-const validationSchema: yup.SchemaOf<newTaskSchemaTS> = yup.object({
+const validationSchema: yup.SchemaOf<INewTaskSchemaTS> = yup.object({
   title: yup.string().required('Title is required'),
   text: yup.string().required('Text is required'),
   date: yup.date().required('Date is required'),
 });
 
 const CreateNewTaskField: FC = () => {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       title: '',
       text: '',
-      //   date: new Date(),
       date: new Date(),
     },
     validationSchema: validationSchema,
-    onSubmit: (values: newTaskSchemaTS, a: FormikActions<newTaskSchemaTS>) => {
-      console.log(values);
+    onSubmit: (
+      values: INewTaskSchemaTS,
+      a: FormikActions<INewTaskSchemaTS>
+    ) => {
+      // console.log(values);
       a.resetForm();
-      //   alert(JSON.stringify(values, null, 2));
     },
   });
-
-  //   const handleKeypress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //     if (e.code === 'Enter' && inputValue.length !== 0) {
-  //       createNewTaskFn(e);
-  //     }
-  //   };
-
-  // const [value, setValue] = useState<Dayjs | null>(
-  const [value, setValue] = useState<dateTypeJS>(
-    // dayjs('2014-08-18T21:11:54')
-    new Date()
-  );
-
-  // const handleChange = (newValue: Dayjs | null) => {
+  const [value, setValue] = useState<dateTypeJS>(new Date());
   const handleChange = (newValue: dateTypeJS) => {
     setValue(newValue);
-    // console.log(newValue);
-
-    // if (newValue) {
-    //   return formik.handleChange;
-    // }
   };
-
   const handleSubmit = () => {
-    // console.log(value);
-    // console.log(dayjs(value));
     console.log(
       dayjs(value).get('month'),
       dayjs(value).get('date'),
@@ -73,14 +49,25 @@ const CreateNewTaskField: FC = () => {
       dayjs(value).get('hour'),
       dayjs(value).get('minute')
     );
-    // console.log(dayjs(value).get('year'));
-    // console.log(dayjs(value).get('month'));
-    // console.log(dayjs(value).get('date'));
-    // console.log(dayjs(value).get('day'));
-    // setValue(dayjs('2022-08-18T21:11:54'));
+    // console.log(formik.values.title);
+    // console.log(formik.values.text);
+    const newTodo: ITodo = {
+      id: dayjs(value).get('minute'),
+      title: formik.values.title,
+      text: formik.values.text,
+      date: {
+        month: dayjs(value).get('month'),
+        date: dayjs(value).get('date'),
+        year: dayjs(value).get('year'),
+        hour: dayjs(value).get('hour'),
+        minute: dayjs(value).get('minute'),
+      },
+      completed: false,
+    };
+    dispatch(createNewTodo(newTodo));
+    console.log(newTodo);
     setValue(dayjs(new Date()));
   };
-
   return (
     <div className={styles.createNewTaskContainer}>
       <form onSubmit={formik.handleSubmit}>
@@ -100,6 +87,7 @@ const CreateNewTaskField: FC = () => {
         <TextField
           sx={{
             width: 7 / 10,
+            marginTop: '10px',
           }}
           variant="outlined"
           id="text"
@@ -109,16 +97,13 @@ const CreateNewTaskField: FC = () => {
           onChange={formik.handleChange}
           error={formik.touched.text && Boolean(formik.errors.text)}
           helperText={formik.touched.text && formik.errors.text}
-          //   onKeyPress={handleKeypress}
         />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateTimePicker
             label="Date and Time picker"
-            // value={formik.values.date}
             minDate={new Date()}
             value={value}
             onChange={handleChange}
-            // renderInput={(params: any) => <TextField {...params} />}
             renderInput={(params) => (
               <TextField
                 label="Date"
@@ -126,7 +111,6 @@ const CreateNewTaskField: FC = () => {
                 variant="outlined"
                 error={formik.touched.date && Boolean(formik.errors.date)}
                 // helperText={formik.touched.date && formik.errors.date}
-                // fullWidth
                 sx={{
                   width: 4 / 10,
                   marginTop: '10px',
@@ -136,13 +120,13 @@ const CreateNewTaskField: FC = () => {
             )}
           />
         </LocalizationProvider>
-
         <Button
           color="primary"
           variant="contained"
           type="submit"
           sx={{
             marginTop: '20px',
+            marginLeft: '10px',
           }}
           onClick={handleSubmit}
         >

@@ -1,2 +1,3 @@
 export const GET_ALL_TODOS = 'GET_ALL_TODOS';
+export const CREATE_NEW_TODO = 'CREATE_NEW_TODO';
 export const DELETE_ALL_TODOS = 'DELETE_ALL_TODOS';
