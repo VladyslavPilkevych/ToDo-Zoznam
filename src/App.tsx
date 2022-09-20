@@ -6,7 +6,9 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <AppRoutes />
+      <div style={{ paddingTop: '85px' }}>
+        <AppRoutes />
+      </div>
     </div>
   );
 }

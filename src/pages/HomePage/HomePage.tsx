@@ -1,9 +1,14 @@
-import React, { memo, useEffect } from 'react';
+import React, { FC, memo, useEffect } from 'react';
+import CreateNewTaskField from '../../components/CreateNewTaskField/CreateNewTaskField';
 
-function HomePage() {
+const HomePage: FC = () => {
   useEffect(() => {}, []);
 
-  return <div>HomePage</div>;
-}
+  return (
+    <div>
+      {/* <CreateNewTaskField /> */}
+    </div>
+  );
+};
 
 export default memo(HomePage);

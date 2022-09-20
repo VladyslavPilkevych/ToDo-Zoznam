@@ -1,0 +1,28 @@
+@import '../../assets/styles/global.module.scss';
+.header {
+  width: 100%;
+  height: 80px;
+  position: fixed;
+  background-color: #379683;
+  display: flex;
+  border-radius: 0 0 25px 25px;
+}
+.imgLogo {
+  max-height: 80px;
+  flex-basis: 10%;
+}
+.pageLinks {
+  flex-basis: 47%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 50px;
+  margin-top: 30px;
+}
+.navLinks {
+  cursor: pointer;
+  text-decoration: none;
+  @include fonts('Roboto', 20px, #05386b, 700);
+}
+.navLinks:hover {
+  color: #01203f;
+}

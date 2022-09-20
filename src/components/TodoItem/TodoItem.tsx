@@ -1,6 +1,6 @@
-import React, { memo } from 'react';
+import React, { FC, memo } from 'react';
 
-const TodoItem: React.FunctionComponent = () => (
+const TodoItem: FC = () => (
   <div>
     <p>TodoItem</p>
   </div>
