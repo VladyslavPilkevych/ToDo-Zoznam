@@ -6,7 +6,7 @@ const HomePage: FC = () => {
 
   return (
     <div>
-      {/* <CreateNewTaskField /> */}
+      <CreateNewTaskField />
     </div>
   );
 };
