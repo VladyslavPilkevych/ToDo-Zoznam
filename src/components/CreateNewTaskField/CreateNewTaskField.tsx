@@ -9,7 +9,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Button from '@mui/material/Button';
 import styles from './CreateNewTaskField.module.scss';
 
-// type dateType = Date | Dayjs | null;
+type dateTypeJS = Date | Dayjs | null;
 // type dateType = Date | null;
 type dateType = Date;
 
@@ -47,11 +47,14 @@ const CreateNewTaskField: FC = () => {
   //     }
   //   };
 
-  const [value, setValue] = useState<Dayjs | null>(
-    dayjs('2014-08-18T21:11:54')
+  // const [value, setValue] = useState<Dayjs | null>(
+  const [value, setValue] = useState<dateTypeJS>(
+    // dayjs('2014-08-18T21:11:54')
+    new Date()
   );
 
-  const handleChange = (newValue: Dayjs | null) => {
+  // const handleChange = (newValue: Dayjs | null) => {
+  const handleChange = (newValue: dateTypeJS) => {
     setValue(newValue);
     // console.log(newValue);
 
@@ -61,8 +64,21 @@ const CreateNewTaskField: FC = () => {
   };
 
   const handleSubmit = () => {
-    console.log(value);
-    setValue(dayjs('2014-08-18T21:11:54'));
+    // console.log(value);
+    // console.log(dayjs(value));
+    console.log(
+      dayjs(value).get('month'),
+      dayjs(value).get('date'),
+      dayjs(value).get('year'),
+      dayjs(value).get('hour'),
+      dayjs(value).get('minute')
+    );
+    // console.log(dayjs(value).get('year'));
+    // console.log(dayjs(value).get('month'));
+    // console.log(dayjs(value).get('date'));
+    // console.log(dayjs(value).get('day'));
+    // setValue(dayjs('2022-08-18T21:11:54'));
+    setValue(dayjs(new Date()));
   };
 
   return (
@@ -99,6 +115,7 @@ const CreateNewTaskField: FC = () => {
           <DateTimePicker
             label="Date and Time picker"
             // value={formik.values.date}
+            minDate={new Date()}
             value={value}
             onChange={handleChange}
             // renderInput={(params: any) => <TextField {...params} />}
