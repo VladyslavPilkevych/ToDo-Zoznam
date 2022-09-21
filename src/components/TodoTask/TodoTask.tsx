@@ -12,6 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ITodo } from '../../types/types';
 
 import { useDispatch } from 'react-redux';
+import { updateTodoList } from '../../store/actionCreators/todosAC';
 import styles from './TodoTask.module.scss';
 
 interface TodoTaskProps {
@@ -26,16 +27,18 @@ const TodoTask: FC<TodoTaskProps> = ({ value }) => {
     date: { month, date, year, hour, minute },
     completed,
   } = value;
+  const dispatch = useDispatch();
   //   const dispatch = useDispatch();
   const [checked, setChecked] = useState(completed);
   const updateTaskComplete = async (todoId: number) => {
     if (todoId) {
-      // update completed redux
+      dispatch(updateTodoList({ id: todoId, action: 'completed' }));
     }
     setChecked((e) => !e);
   };
   const deleteTask = async (todoId: number) => {
-    // delete from redux
+    dispatch(updateTodoList({ id: todoId, action: 'delete' }));
+
   };
   return (
     <div className={styles.todoTaskContainer}>
