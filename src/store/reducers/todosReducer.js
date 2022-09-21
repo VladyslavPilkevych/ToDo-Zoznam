@@ -2,11 +2,18 @@ import {
   GET_ALL_TODOS,
   UPDATE_TODO_LIST,
   CREATE_NEW_TODO,
+  FILTER_TODO_LIST,
+  FILTER_SEARCH_INPUT,
   DELETE_ALL_TODOS,
 } from '../actions/todosActions';
 
 const initialState = {
   allTodos: [],
+  filteredTodoList: [],
+  filters: {
+    searchInputFilter: '',
+    completedFilter: false,
+  },
 };
 
 const todosReducer = (state = initialState, { type, payload } = {}) => {
@@ -25,7 +32,7 @@ const todosReducer = (state = initialState, { type, payload } = {}) => {
         });
         return { ...state, allTodos: newTodoList };
       }
-      const index = state.allTodos.findIndex((item) => item.id === payload.id);
+      const index = state.allTodos.findIndex((todo) => todo.id === payload.id);
       const newTodoList = [...state.allTodos];
       newTodoList.splice(index, 1);
       return { ...state, allTodos: newTodoList };
@@ -35,6 +42,36 @@ const todosReducer = (state = initialState, { type, payload } = {}) => {
         return { ...state, allTodos: [payload] };
       }
       return { ...state, allTodos: [...state.allTodos, payload] };
+    }
+    case FILTER_TODO_LIST: {
+      console.log(state.allTodos);
+      if (payload.value.split(' ').join('').length === 0) {
+        return { ...state, filteredTodoList: state.allTodos };
+      }
+      if (payload.action === 'search') {
+        const newTodoList = state.allTodos.map((todo) => {
+          if (
+            todo.title
+              .toLowerCase()
+              .split(' ')
+              .join('')
+              .includes(payload.value.toLowerCase().split(' ').join(''))
+          ) {
+            return todo;
+          }
+        });
+        const filteredList = newTodoList.filter((todo) => {
+          return todo !== undefined;
+        });
+        return { ...state, filteredTodoList: filteredList };
+      }
+      return { ...state, filteredTodoList: state.allTodos };
+    }
+    case FILTER_SEARCH_INPUT: {
+      return {
+        ...state,
+        filters: { ...state.filters, searchInputFilter: payload },
+      };
     }
     case DELETE_ALL_TODOS: {
       return { ...state, allTodos: [] };

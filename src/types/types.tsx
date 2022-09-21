@@ -23,5 +23,14 @@ export interface ITodo {
 export interface ITodosState {
   todos: {
     allTodos: ITodo[];
+    filteredTodoList: ITodo[];
+  }
+}
+export interface IFilterState {
+  todos: {
+    filters: {
+      searchInputFilter: string;
+      completedFilter: boolean;
+    }
   }
 }
