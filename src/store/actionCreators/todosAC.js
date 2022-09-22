@@ -4,6 +4,7 @@ import {
   CREATE_NEW_TODO,
   FILTER_TODO_LIST,
   FILTER_SEARCH_INPUT,
+  FILTER_COMPLETE_TODOS,
   DELETE_ALL_TODOS,
 } from '../actions/todosActions';
 
@@ -25,6 +26,10 @@ export const filterTodoList = (data) => ({
 });
 export const liveSearchInputFilter = (data) => ({
   type: FILTER_SEARCH_INPUT,
+  payload: data,
+});
+export const changeFilterCompleteTodos = (data) => ({
+  type: FILTER_COMPLETE_TODOS,
   payload: data,
 });
 export const deleteAllTodos = () => ({ type: DELETE_ALL_TODOS });

@@ -4,7 +4,10 @@ import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { filterTodoList, liveSearchInputFilter } from '../../store/actionCreators/todosAC'
+import {
+  filterTodoList,
+  liveSearchInputFilter,
+} from '../../store/actionCreators/todosAC';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,8 +59,8 @@ export default function SearchInput() {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState<string>('');
   return (
-    <Box sx={{ width: '80%', margin: '20px auto' }}>
-      <Search >
+    <Box sx={{ margin: '20px auto' }}>
+      <Search>
         <SearchIconWrapper>
           <SearchIcon />
         </SearchIconWrapper>
@@ -69,11 +72,13 @@ export default function SearchInput() {
             // console.log(e.target.value);
             setInputValue(e.target.value);
             console.log(e.target.value);
-            dispatch(filterTodoList({ value: e.target.value, action: 'search' }));
+            dispatch(
+              filterTodoList({ value: e.target.value, action: 'search' })
+            );
             dispatch(liveSearchInputFilter(e.target.value));
           }}
         />
-      </Search >
-    </Box >
+      </Search>
+    </Box>
   );
 }

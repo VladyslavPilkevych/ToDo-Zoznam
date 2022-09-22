@@ -21,10 +21,16 @@ const TodoContainer: FC = () => {
     setTodoListByFilters(allTodos);
     console.log(searchInputFilter);
     console.log(filteredTodoList);
-    if (searchInputFilter && searchInputFilter.split(' ').join('').length > 0 && filteredTodoList) {
+    if (
+      searchInputFilter &&
+      searchInputFilter.split(' ').join('').length > 0 &&
+      filteredTodoList
+    ) {
+      setTodoListByFilters(filteredTodoList);
+    } else if (completedFilter && typeof completedFilter === 'number') {
       setTodoListByFilters(filteredTodoList);
     }
-  }, [allTodos, filteredTodoList, searchInputFilter, completedFilter])
+  }, [allTodos, filteredTodoList, searchInputFilter, completedFilter]);
   //   useEffect(() => {
   //     if (allTodos && allTodos.length > 0) {
   // ? нужен ли мне useEffect, если я и так подписался на обновления через useSelector
@@ -32,10 +38,12 @@ const TodoContainer: FC = () => {
   //   }, [allTodos]);
   return (
     <div className={styles.wrapper}>
-      {todoListByFilters && todoListByFilters.length > 0 &&
-        todoListByFilters?.map((elem) => <TodoTask value={elem} key={elem.id} />)}
-      {todoListByFilters && todoListByFilters.length === 0 &&
-        <p>No Items</p>}
+      {todoListByFilters &&
+        todoListByFilters.length > 0 &&
+        todoListByFilters?.map((elem) => (
+          <TodoTask value={elem} key={elem.id} />
+        ))}
+      {todoListByFilters && todoListByFilters.length === 0 && <p>No Items</p>}
     </div>
   );
 };
