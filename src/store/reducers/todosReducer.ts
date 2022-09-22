@@ -7,8 +7,24 @@ import {
   FILTER_COMPLETE_TODOS,
   DELETE_ALL_TODOS,
 } from '../actions/todosActions';
+import { AnyAction } from 'redux';
+import { ITodo } from '../../types/types';
 
-const initialState = {
+interface ITodoInitialState {
+  allTodos: ITodo[];
+  filteredTodoList: ITodo[];
+  filters: {
+    searchInputFilter: string;
+    completedFilter: null | string | number;
+  };
+}
+
+// interface IAction {
+//   type: string;
+//   payload: undefined | object;
+// }
+
+const initialState: ITodoInitialState = {
   allTodos: [],
   filteredTodoList: [],
   filters: {
@@ -17,14 +33,15 @@ const initialState = {
   },
 };
 
-const todosReducer = (state = initialState, { type, payload } = {}) => {
+const todosReducer = (state = initialState, action: AnyAction) => {
+  const { type, payload } = action;
   switch (type) {
     case GET_ALL_TODOS: {
       return { ...state, allTodos: payload };
     }
     case UPDATE_TODO_LIST: {
       if (payload.action === 'completed') {
-        const newTodoList = state.allTodos.map((todo) => {
+        const newTodoList = state.allTodos.map((todo: ITodo) => {
           if (todo.id === payload.id) {
             todo.completed = !todo.completed;
             return todo;
@@ -49,22 +66,44 @@ const todosReducer = (state = initialState, { type, payload } = {}) => {
       // if (payload.value.split(' ').join('').length === 0) {
       //   return { ...state, filteredTodoList: state.allTodos };
       // }
-      if (payload.action === 'search') {
-        const newTodoList = state.allTodos.map((todo) => {
-          if (
-            todo.title
-              .toLowerCase()
-              .split(' ')
-              .join('')
-              .includes(payload.value.toLowerCase().split(' ').join(''))
-          ) {
-            return todo;
-          }
-        });
-        const filteredList = newTodoList.filter((todo) => {
-          return todo !== undefined;
-        });
-        return { ...state, filteredTodoList: filteredList };
+      if (
+        payload.action === 'search' &&
+        payload.value.split(' ').join('').length > 0
+      ) {
+        // let newTodoList: NotSortedTodoArr[] = [];
+        if (typeof state.filters.completedFilter === 'number') {
+          const newTodoList = state.filteredTodoList.map((todo) => {
+            if (
+              todo.title
+                .toLowerCase()
+                .split(' ')
+                .join('')
+                .includes(payload.value.toLowerCase().split(' ').join(''))
+            ) {
+              return todo;
+            }
+          });
+          const filteredList = newTodoList.filter((todo) => {
+            return todo !== undefined;
+          });
+          return { ...state, filteredTodoList: filteredList };
+        } else {
+          const newTodoList = state.allTodos.map((todo) => {
+            if (
+              todo.title
+                .toLowerCase()
+                .split(' ')
+                .join('')
+                .includes(payload.value.toLowerCase().split(' ').join(''))
+            ) {
+              return todo;
+            }
+          });
+          const filteredList = newTodoList.filter((todo) => {
+            return todo !== undefined;
+          });
+          return { ...state, filteredTodoList: filteredList };
+        }
       }
       if (payload.action === 'complete') {
         if (payload.value === 'all') {

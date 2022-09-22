@@ -53,7 +53,8 @@ const CreateNewTaskField: FC = () => {
     console.log(formik.values.text);
     if (/\S/.test(formik.values.title) && /\S/.test(formik.values.text)) {
       const newTodo: ITodo = {
-        id: dayjs(value).get('minute'),
+        // id: dayjs(value).get('minute'),
+        id: Math.floor(Math.random() * 999),
         title: formik.values.title,
         text: formik.values.text,
         date: {
