@@ -38,7 +38,6 @@ const TodoTask: FC<TodoTaskProps> = ({ value }) => {
   };
   const deleteTask = async (todoId: number) => {
     dispatch(updateTodoList({ id: todoId, action: 'delete' }));
-
   };
   return (
     <div className={styles.todoTaskContainer}>
