@@ -7,12 +7,31 @@ import {
   FILTER_COMPLETE_TODOS,
   DELETE_ALL_TODOS,
 } from '../actions/todosActions';
+import { Dispatch } from 'react';
 import { ITodo, IData, IUpdateData } from '../../types/types';
+import { getAllTodoList } from '../../api/api';
+import { AxiosResponse, AxiosError } from 'axios';
 
-export const getAllTodos = (data: ITodo[]) => ({
-  type: GET_ALL_TODOS,
-  payload: data,
-});
+// export const getAllTodos = (data: ITodo[]) => ({
+//   type: GET_ALL_TODOS,
+//   payload: data,
+// });
+export const getAllTodos = () => async (dispatch: Dispatch<any>) => {
+  // console.log(typeof dispatch);  
+  await getAllTodoList()
+    .then((rsp: AxiosResponse<any>) => {
+      console.log(rsp);
+      if (rsp.status === 200) {
+        dispatch({ type: GET_ALL_TODOS, payload: rsp.data });
+      }
+    })
+    .catch((err: AxiosError<any>) => {
+      // dispatch(addNewError(err));
+      console.log(err);
+      // .catch(() => {
+      // toast.error('Something went wrong');
+    });
+};
 export const updateTodoList = (data: IUpdateData) => ({
   type: UPDATE_TODO_LIST,
   payload: data,
