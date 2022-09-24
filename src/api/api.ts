@@ -17,6 +17,6 @@ export function postTodo(data: ITodo) {
 export function putTodoInfo(data: ITodo) {
   return api.put(`${BASE_URL}/${data.id}`, data);
 }
-export function deleteTodo(todoId: number) {
-  return api.delete(`${BASE_URL}/${todoId}`);
+export function deleteTodo(data: number) {
+  return api.delete(`${BASE_URL}/${data}`);
 }

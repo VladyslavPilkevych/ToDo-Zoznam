@@ -1,4 +1,4 @@
-import React, { FC, memo, useState } from 'react';
+import React, { FC, memo, useState, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 
 import ListItem from '@mui/material/ListItem';
@@ -34,10 +34,14 @@ const TodoTask: FC<TodoTaskProps> = ({ value }) => {
   const {
     filters: { searchInputFilter, completedFilter },
   } = useSelector((state: IInitialState) => state.todos);
+  useEffect(() => {
+    setChecked(completed);
+  }, [completed])
   const updateTaskComplete = async (todoId: number) => {
     if (todoId) {
       // dispatch(changeTodoCompleted(todoId));
-      changeTodoCompleted(todoId);
+      // changeTodoCompleted(todoId);
+      changeTodoCompleted(value);
       // dispatch(
       //   filterTodoList({
       //     filterSearchInput: searchInputFilter,
@@ -49,7 +53,7 @@ const TodoTask: FC<TodoTaskProps> = ({ value }) => {
         filterCompleted: completedFilter,
       });
     }
-    setChecked((e) => !e);
+    // setChecked((e) => !e);
   };
   const deleteTask = async (todoId: number) => {
     // dispatch(deleteTodo(todoId));
