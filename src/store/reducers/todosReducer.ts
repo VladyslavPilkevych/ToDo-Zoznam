@@ -61,19 +61,15 @@ const todosReducer = (
             return todo;
           }
         });
-        sortedTodoList.push(...newTodosArr);
+        sortedTodoList = newTodosArr;
       }
       console.log(action.payload.filterCompleted);
       if (typeof action.payload.filterCompleted === 'boolean') {
-        console.log(sortedTodoList);
-        
         const newTodosArr = sortedTodoList.filter((todo) => {
-          console.log(todo);
           if (action.payload.filterCompleted === todo.completed) {
             return todo;
           }
         });
-        console.log(newTodosArr);
         sortedTodoList = newTodosArr;
       }
       return { ...state, filteredTodoList: sortedTodoList };

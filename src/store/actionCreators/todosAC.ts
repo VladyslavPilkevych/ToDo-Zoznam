@@ -68,7 +68,7 @@ export const liveSearchInputFilter = (data: string) => ({
   type: FILTER_SEARCH_INPUT,
   payload: data,
 });
-export const changeFilterCompleteTodos = (data: string | number) => ({
+export const changeFilterCompleteTodos = (data: boolean | null) => ({
   type: FILTER_COMPLETE_TODOS,
   payload: data,
 });

@@ -26,14 +26,16 @@ export default function TabsFilters() {
     switch (newValue) {
       case 1:
         dispatch(filterTodoList({ filterSearchInput: searchInputFilter, filterCompleted: false }));
+        dispatch(changeFilterCompleteTodos(false));
         break;
       case 2:
         dispatch(filterTodoList({ filterSearchInput: searchInputFilter, filterCompleted: true }));
+        dispatch(changeFilterCompleteTodos(true));
         break;
       default:
         dispatch(filterTodoList({ filterSearchInput: searchInputFilter, filterCompleted: null }));
+        dispatch(changeFilterCompleteTodos(null));
     }
-    dispatch(changeFilterCompleteTodos(newValue));
     setValue(newValue);
   };
 
