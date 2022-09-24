@@ -1,39 +1,27 @@
-// import {
-//   GET_ALL_TODOS,
-//   CHANGE_TODO_COMPLETED,
-//   CREATE_NEW_TODO,
-//   FILTER_TODO_LIST,
-//   FILTER_SEARCH_INPUT,
-//   FILTER_COMPLETE_TODOS,
-//   DELETE_TODO,
-// } from '../actions/todosActions';
-// import { Dispatch } from 'react';
+import { Dispatch } from 'react';
 import { ITodo, IData, IUpdateData } from '../../types/types';
 import { todosActionTypes } from '../../types/todoReducerTypes';
-// import { AxiosResponse, AxiosError } from 'axios';
-// import { AnyAction } from 'redux';
-// import * as api from '../../api/api';
+import { TodosAction } from '../../types/todoReducerTypes';
+import { AxiosResponse, AxiosError } from 'axios';
+import * as api from '../../api/api';
 
-// export const getAllTodos = () =>
-//   async (dispatch: Dispatch<AnyAction>): Promise<void> => {
-//     await api
-//       .getAllTodoList()
-//       .then((rsp: AxiosResponse<any>) => {
-//         console.log(rsp);
-//         if (rsp.status === 200) {
-//           dispatch({ type: GET_ALL_TODOS, payload: rsp.data });
-//         }
-//       })
-//       .catch((err: AxiosError<any>) => {
-//         console.log(err);
-//       });
-//   };
-export const getAllTodos = (data: ITodo[]) => ({
-  type: todosActionTypes.GET_ALL_TODOS,
-  payload: data,
-});
-// export const updateTodoList = (data: IUpdateData) => ({
-//   type: UPDATE_TODO_LIST,
+export const getAllTodos = () => {
+  return async (dispatch: Dispatch<TodosAction>): Promise<void> => {
+    await api
+      .getAllTodoList()
+      .then((rsp: AxiosResponse) => {
+        console.log(rsp);
+        if (rsp.status === 200) {
+          dispatch({ type: todosActionTypes.GET_ALL_TODOS, payload: rsp.data });
+        }
+      })
+      .catch((err: Error | AxiosError) => {
+        console.log(err);
+      });
+  };
+};
+// export const getAllTodos = (data: ITodo[]) => ({
+//   type: todosActionTypes.GET_ALL_TODOS,
 //   payload: data,
 // });
 export const changeTodoCompleted = (data: number) => ({
