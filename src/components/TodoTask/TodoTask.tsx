@@ -36,7 +36,10 @@ const TodoTask: FC<TodoTaskProps> = ({ value }) => {
   } = useSelector((state: IInitialState) => state.todos);
   useEffect(() => {
     setChecked(completed);
-  }, [completed])
+  }, [completed]);
+  useEffect(() => {
+    console.log(id);
+  }, [id]);
   const updateTaskComplete = async (todoId: number) => {
     if (todoId) {
       // dispatch(changeTodoCompleted(todoId));

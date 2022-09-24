@@ -59,27 +59,34 @@ export const changeTodoCompleted = (data: ITodo) => {
 //   type: todosActionTypes.CHANGE_TODO_COMPLETED,
 //   payload: data,
 // });
-// export const createNewTodo = (data: ITodo) => async (dispatch: Dispatch<AnyAction>) => {
-//   try {
-//     const todoData = await api.postTodo(data);
-//     dispatch({ type: CREATE_NEW_TODO, payload: todoData });
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
 export const createNewTodo =
   (data: ITodo) =>
   async (dispatch: Dispatch<TodosAction>): Promise<void> => {
-    try {
-      dispatch({
-        type: todosActionTypes.CREATE_NEW_TODO,
-        payload: data,
+    await api
+      .postTodo(data)
+      .then((res) => {
+        dispatch({
+          type: todosActionTypes.CREATE_NEW_TODO,
+          payload: res.data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      await api.postTodo(data);
-    } catch (error) {
-      console.log(error);
-    }
   };
+// export const createNewTodo =
+//   (data: ITodo) =>
+//   async (dispatch: Dispatch<TodosAction>): Promise<void> => {
+//     try {
+//       dispatch({
+//         type: todosActionTypes.CREATE_NEW_TODO,
+//         payload: data,
+//       });
+//       await api.postTodo(data);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
 // export const createNewTodo = (data: ITodo) => ({
 //   type: todosActionTypes.CREATE_NEW_TODO,
 //   payload: data,
@@ -107,15 +114,22 @@ export const changeFilterCompleteTodos = (data: boolean | null) => ({
 export const deleteTodo =
   (data: number) =>
   async (dispatch: Dispatch<TodosAction>): Promise<void> => {
-    try {
-      dispatch({
-        type: todosActionTypes.DELETE_TODO,
-        payload: data,
+    // try {
+    dispatch({
+      type: todosActionTypes.DELETE_TODO,
+      payload: data,
+    });
+    await api
+      .deleteTodo(data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      await api.deleteTodo(data);
-    } catch (error) {
-      console.log(error);
-    }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 // export const deleteTodo = (data: number) => ({
 //   type: todosActionTypes.DELETE_TODO,
