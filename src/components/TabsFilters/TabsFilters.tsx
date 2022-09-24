@@ -3,14 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import {
-  filterTodoList,
-  changeFilterCompleteTodos,
-} from '../../store/actionCreators/todosAC';
+// import {
+//   filterTodoList,
+//   changeFilterCompleteTodos,
+// } from '../../store/actionCreators/todosAC';
 import { IInitialState } from '../../types/types';
+import { useActions } from '../../hooks/useActions';
 
 export default function TabsFilters() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const { filterTodoList, changeFilterCompleteTodos } = useActions();
   const [value, setValue] = React.useState(0);
   const {
     filters: { searchInputFilter },
@@ -25,16 +27,46 @@ export default function TabsFilters() {
     // console.log(newValue);
     switch (newValue) {
       case 1:
-        dispatch(filterTodoList({ filterSearchInput: searchInputFilter, filterCompleted: false }));
-        dispatch(changeFilterCompleteTodos(false));
+        // dispatch(
+        //   filterTodoList({
+        //     filterSearchInput: searchInputFilter,
+        //     filterCompleted: false,
+        //   })
+        // );
+        filterTodoList({
+          filterSearchInput: searchInputFilter,
+          filterCompleted: false,
+        });
+        // dispatch(changeFilterCompleteTodos(false));
+        changeFilterCompleteTodos(false);
         break;
       case 2:
-        dispatch(filterTodoList({ filterSearchInput: searchInputFilter, filterCompleted: true }));
-        dispatch(changeFilterCompleteTodos(true));
+        // dispatch(
+        //   filterTodoList({
+        //     filterSearchInput: searchInputFilter,
+        //     filterCompleted: true,
+        //   })
+        // );
+        filterTodoList({
+          filterSearchInput: searchInputFilter,
+          filterCompleted: true,
+        });
+        // dispatch(changeFilterCompleteTodos(true));
+        changeFilterCompleteTodos(true);
         break;
       default:
-        dispatch(filterTodoList({ filterSearchInput: searchInputFilter, filterCompleted: null }));
-        dispatch(changeFilterCompleteTodos(null));
+        // dispatch(
+        //   filterTodoList({
+        //     filterSearchInput: searchInputFilter,
+        //     filterCompleted: null,
+        //   })
+        // );
+        filterTodoList({
+          filterSearchInput: searchInputFilter,
+          filterCompleted: null,
+        });
+        // dispatch(changeFilterCompleteTodos(null));
+        changeFilterCompleteTodos(null);
     }
     setValue(newValue);
   };

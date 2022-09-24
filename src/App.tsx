@@ -5,10 +5,9 @@ import { useActions } from './hooks/useActions';
 import './App.scss';
 
 function App() {
-  const {getAllTodos} = useActions();
+  const { getAllTodos } = useActions();
   useEffect(() => {
     getAllTodos();
-    // dispatch(getAllTodos());
   }, []);
   return (
     <div className="App">

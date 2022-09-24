@@ -1,5 +1,5 @@
 import React, { FC, memo, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import dayjs, { Dayjs } from 'dayjs';
 import { useFormik, FormikHelpers as FormikActions } from 'formik';
 import * as yup from 'yup';
@@ -10,7 +10,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Button from '@mui/material/Button';
 import styles from './CreateNewTaskField.module.scss';
 import { ITodo, INewTaskSchemaTS } from '../../types/types';
-import { createNewTodo } from '../../store/actionCreators/todosAC';
+// import { createNewTodo } from '../../store/actionCreators/todosAC';
+import { useActions } from '../../hooks/useActions';
 
 type dateTypeJS = Date | Dayjs | null;
 
@@ -21,7 +22,8 @@ const validationSchema: yup.SchemaOf<INewTaskSchemaTS> = yup.object({
 });
 
 const CreateNewTaskField: FC = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const { createNewTodo } = useActions();
   const formik = useFormik({
     initialValues: {
       title: '',
@@ -65,7 +67,8 @@ const CreateNewTaskField: FC = () => {
         },
         completed: false,
       };
-      dispatch(createNewTodo(newTodo));
+      // dispatch(createNewTodo(newTodo));
+      createNewTodo(newTodo);
       setValue(dayjs(new Date()));
     }
   };
