@@ -1,15 +1,15 @@
-import {
-  GET_ALL_TODOS,
-  // UPDATE_TODO_LIST,
-  CHANGE_TODO_COMPLETED,
-  CREATE_NEW_TODO,
-  FILTER_TODO_LIST,
-  FILTER_SEARCH_INPUT,
-  FILTER_COMPLETE_TODOS,
-  DELETE_TODO,
-} from '../actions/todosActions';
+// import {
+//   GET_ALL_TODOS,
+//   CHANGE_TODO_COMPLETED,
+//   CREATE_NEW_TODO,
+//   FILTER_TODO_LIST,
+//   FILTER_SEARCH_INPUT,
+//   FILTER_COMPLETE_TODOS,
+//   DELETE_TODO,
+// } from '../actions/todosActions';
 // import { Dispatch } from 'react';
 import { ITodo, IData, IUpdateData } from '../../types/types';
+import { todosActionTypes } from '../../types/todoReducerTypes';
 // import { AxiosResponse, AxiosError } from 'axios';
 // import { AnyAction } from 'redux';
 // import * as api from '../../api/api';
@@ -29,7 +29,7 @@ import { ITodo, IData, IUpdateData } from '../../types/types';
 //       });
 //   };
 export const getAllTodos = (data: ITodo[]) => ({
-  type: GET_ALL_TODOS,
+  type: todosActionTypes.GET_ALL_TODOS,
   payload: data,
 });
 // export const updateTodoList = (data: IUpdateData) => ({
@@ -37,7 +37,7 @@ export const getAllTodos = (data: ITodo[]) => ({
 //   payload: data,
 // });
 export const changeTodoCompleted = (data: number) => ({
-  type: CHANGE_TODO_COMPLETED,
+  type: todosActionTypes.CHANGE_TODO_COMPLETED,
   payload: data,
 });
 // export const createNewTodo = (data: ITodo) => async (dispatch: Dispatch<AnyAction>) => {
@@ -49,7 +49,7 @@ export const changeTodoCompleted = (data: number) => ({
 //   }
 // };
 export const createNewTodo = (data: ITodo) => ({
-  type: CREATE_NEW_TODO,
+  type: todosActionTypes.CREATE_NEW_TODO,
   payload: data,
 });
 // export const deleteTodo = (data: number) => async (dispatch: Dispatch<AnyAction>) => {
@@ -61,18 +61,18 @@ export const createNewTodo = (data: ITodo) => ({
 //   }
 // };
 export const filterTodoList = (data: IData) => ({
-  type: FILTER_TODO_LIST,
+  type: todosActionTypes.FILTER_TODO_LIST,
   payload: data,
 });
 export const liveSearchInputFilter = (data: string) => ({
-  type: FILTER_SEARCH_INPUT,
+  type: todosActionTypes.FILTER_SEARCH_INPUT,
   payload: data,
 });
 export const changeFilterCompleteTodos = (data: boolean | null) => ({
-  type: FILTER_COMPLETE_TODOS,
+  type: todosActionTypes.FILTER_COMPLETE_TODOS,
   payload: data,
 });
 export const deleteTodo = (data: number) => ({
-  type: DELETE_TODO,
+  type: todosActionTypes.DELETE_TODO,
   payload: data,
 });

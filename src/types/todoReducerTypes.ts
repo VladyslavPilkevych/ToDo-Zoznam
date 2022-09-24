@@ -9,7 +9,7 @@ export interface ITodoInitialState {
   };
 }
 
-enum todosActionTypes {
+export enum todosActionTypes {
   GET_ALL_TODOS = 'GET_ALL_TODOS',
   CHANGE_TODO_COMPLETED = 'CHANGE_TODO_COMPLETED',
   CREATE_NEW_TODO = 'CREATE_NEW_TODO',

@@ -1,14 +1,14 @@
-import {
-  GET_ALL_TODOS,
-  CHANGE_TODO_COMPLETED,
-  CREATE_NEW_TODO,
-  FILTER_TODO_LIST,
-  FILTER_SEARCH_INPUT,
-  FILTER_COMPLETE_TODOS,
-  DELETE_TODO,
-} from '../actions/todosActions';
+// import {
+//   GET_ALL_TODOS,
+//   CHANGE_TODO_COMPLETED,
+//   CREATE_NEW_TODO,
+//   FILTER_TODO_LIST,
+//   FILTER_SEARCH_INPUT,
+//   FILTER_COMPLETE_TODOS,
+//   DELETE_TODO,
+// } from '../actions/todosActions';
 import { ITodo } from '../../types/types';
-import { TodosAction, ITodoInitialState } from '../../types/todoReducerTypes';
+import { TodosAction, ITodoInitialState, todosActionTypes } from '../../types/todoReducerTypes';
 
 const initialState: ITodoInitialState = {
   allTodos: [],
@@ -24,10 +24,10 @@ const todosReducer = (
   action: TodosAction
 ): ITodoInitialState => {
   switch (action.type) {
-    case GET_ALL_TODOS: {
+    case todosActionTypes.GET_ALL_TODOS: {
       return { ...state, allTodos: action.payload };
     }
-    case CHANGE_TODO_COMPLETED: {
+    case todosActionTypes.CHANGE_TODO_COMPLETED: {
       const newTodoList = state.allTodos.filter((todo: ITodo) => {
         if (todo.id === action.payload) {
           todo.completed = !todo.completed;
@@ -36,13 +36,13 @@ const todosReducer = (
       });
       return { ...state, allTodos: newTodoList };
     }
-    case CREATE_NEW_TODO: {
+    case todosActionTypes.CREATE_NEW_TODO: {
       if (state.allTodos.length === 0) {
         return { ...state, allTodos: [action.payload] };
       }
       return { ...state, allTodos: [...state.allTodos, action.payload] };
     }
-    case FILTER_TODO_LIST: {
+    case todosActionTypes.FILTER_TODO_LIST: {
       let sortedTodoList: ITodo[] = state.allTodos;
       if (action.payload.filterSearchInput.length > 0) {
         const newTodosArr = sortedTodoList.filter((todo) => {
@@ -63,7 +63,6 @@ const todosReducer = (
         });
         sortedTodoList = newTodosArr;
       }
-      console.log(action.payload.filterCompleted);
       if (typeof action.payload.filterCompleted === 'boolean') {
         const newTodosArr = sortedTodoList.filter((todo) => {
           if (action.payload.filterCompleted === todo.completed) {
@@ -74,19 +73,19 @@ const todosReducer = (
       }
       return { ...state, filteredTodoList: sortedTodoList };
     }
-    case FILTER_SEARCH_INPUT: {
+    case todosActionTypes.FILTER_SEARCH_INPUT: {
       return {
         ...state,
         filters: { ...state.filters, searchInputFilter: action.payload },
       };
     }
-    case FILTER_COMPLETE_TODOS: {
+    case todosActionTypes.FILTER_COMPLETE_TODOS: {
       return {
         ...state,
         filters: { ...state.filters, completedFilter: action.payload },
       };
     }
-    case DELETE_TODO: {
+    case todosActionTypes.DELETE_TODO: {
       const index = state.allTodos.findIndex(
         (todo) => todo.id === action.payload
       );
