@@ -1,28 +1,14 @@
 import {
   GET_ALL_TODOS,
-  UPDATE_TODO_LIST,
+  CHANGE_TODO_COMPLETED,
   CREATE_NEW_TODO,
   FILTER_TODO_LIST,
   FILTER_SEARCH_INPUT,
   FILTER_COMPLETE_TODOS,
-  DELETE_ALL_TODOS,
+  DELETE_TODO,
 } from '../actions/todosActions';
-import { AnyAction } from 'redux';
 import { ITodo } from '../../types/types';
-
-interface ITodoInitialState {
-  allTodos: ITodo[];
-  filteredTodoList: ITodo[];
-  filters: {
-    searchInputFilter: string;
-    completedFilter: null | string | number;
-  };
-}
-
-// interface IAction {
-//   type: string;
-//   payload: undefined | object;
-// }
+import { TodosAction, ITodoInitialState } from '../../types/todoReducerTypes';
 
 const initialState: ITodoInitialState = {
   allTodos: [],
@@ -33,108 +19,84 @@ const initialState: ITodoInitialState = {
   },
 };
 
-const todosReducer = (state = initialState, action: AnyAction) => {
-  const { type, payload } = action;
-  switch (type) {
+const todosReducer = (
+  state = initialState,
+  action: TodosAction
+): ITodoInitialState => {
+  switch (action.type) {
     case GET_ALL_TODOS: {
-      return { ...state, allTodos: payload };
+      return { ...state, allTodos: action.payload };
     }
-    case UPDATE_TODO_LIST: {
-      if (payload.action === 'completed') {
-        const newTodoList = state.allTodos.map((todo: ITodo) => {
-          if (todo.id === payload.id) {
-            todo.completed = !todo.completed;
-            return todo;
-          }
-          return todo;
-        });
-        return { ...state, allTodos: newTodoList };
-      }
-      const index = state.allTodos.findIndex((todo) => todo.id === payload.id);
-      const newTodoList = [...state.allTodos];
-      newTodoList.splice(index, 1);
+    case CHANGE_TODO_COMPLETED: {
+      const newTodoList = state.allTodos.filter((todo: ITodo) => {
+        if (todo.id === action.payload) {
+          todo.completed = !todo.completed;
+        }
+        return todo;
+      });
       return { ...state, allTodos: newTodoList };
     }
     case CREATE_NEW_TODO: {
       if (state.allTodos.length === 0) {
-        return { ...state, allTodos: [payload] };
+        return { ...state, allTodos: [action.payload] };
       }
-      return { ...state, allTodos: [...state.allTodos, payload] };
+      return { ...state, allTodos: [...state.allTodos, action.payload] };
     }
     case FILTER_TODO_LIST: {
-      // console.log(state.allTodos);
-      // if (payload.value.split(' ').join('').length === 0) {
-      //   return { ...state, filteredTodoList: state.allTodos };
-      // }
-      if (
-        payload.action === 'search' &&
-        payload.value.split(' ').join('').length > 0
-      ) {
-        // let newTodoList: NotSortedTodoArr[] = [];
-        if (typeof state.filters.completedFilter === 'number') {
-          const newTodoList = state.filteredTodoList.map((todo) => {
-            if (
-              todo.title
-                .toLowerCase()
-                .split(' ')
-                .join('')
-                .includes(payload.value.toLowerCase().split(' ').join(''))
-            ) {
-              return todo;
-            }
-          });
-          const filteredList = newTodoList.filter((todo) => {
-            return todo !== undefined;
-          });
-          return { ...state, filteredTodoList: filteredList };
-        } else {
-          const newTodoList = state.allTodos.map((todo) => {
-            if (
-              todo.title
-                .toLowerCase()
-                .split(' ')
-                .join('')
-                .includes(payload.value.toLowerCase().split(' ').join(''))
-            ) {
-              return todo;
-            }
-          });
-          const filteredList = newTodoList.filter((todo) => {
-            return todo !== undefined;
-          });
-          return { ...state, filteredTodoList: filteredList };
-        }
-      }
-      if (payload.action === 'complete') {
-        if (payload.value === 'all') {
-          return { ...state, filteredTodoList: state.allTodos };
-        }
-        const newTodoList = state.allTodos.map((todo) => {
-          if (payload.value === todo.completed) {
+      let sortedTodoList: ITodo[] = state.allTodos;
+      if (action.payload.filterSearchInput.length > 0) {
+        const newTodosArr = sortedTodoList.filter((todo) => {
+          if (
+            todo.title
+              .toLowerCase()
+              .split(' ')
+              .join('')
+              .includes(
+                action.payload.filterSearchInput
+                  .toLowerCase()
+                  .split(' ')
+                  .join('')
+              )
+          ) {
             return todo;
           }
         });
-        const filteredList = newTodoList.filter((todo) => {
-          return todo !== undefined;
-        });
-        return { ...state, filteredTodoList: filteredList };
+        sortedTodoList.push(...newTodosArr);
       }
-      return { ...state, filteredTodoList: state.allTodos };
+      console.log(action.payload.filterCompleted);
+      if (typeof action.payload.filterCompleted === 'boolean') {
+        console.log(sortedTodoList);
+        
+        const newTodosArr = sortedTodoList.filter((todo) => {
+          console.log(todo);
+          if (action.payload.filterCompleted === todo.completed) {
+            return todo;
+          }
+        });
+        console.log(newTodosArr);
+        sortedTodoList = newTodosArr;
+      }
+      return { ...state, filteredTodoList: sortedTodoList };
     }
     case FILTER_SEARCH_INPUT: {
       return {
         ...state,
-        filters: { ...state.filters, searchInputFilter: payload },
+        filters: { ...state.filters, searchInputFilter: action.payload },
       };
     }
     case FILTER_COMPLETE_TODOS: {
       return {
         ...state,
-        filters: { ...state.filters, completedFilter: payload },
+        filters: { ...state.filters, completedFilter: action.payload },
       };
     }
-    case DELETE_ALL_TODOS: {
-      return { ...state, allTodos: [] };
+    case DELETE_TODO: {
+      const index = state.allTodos.findIndex(
+        (todo) => todo.id === action.payload
+      );
+      const newTodoList = [...state.allTodos];
+      newTodoList.splice(index, 1);
+      return { ...state, allTodos: newTodoList };
     }
     default:
       return state;

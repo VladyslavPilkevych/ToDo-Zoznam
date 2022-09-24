@@ -42,19 +42,18 @@ const CreateNewTaskField: FC = () => {
     setValue(newValue);
   };
   const handleSubmit = () => {
-    console.log(
-      dayjs(value).get('month'),
-      dayjs(value).get('date'),
-      dayjs(value).get('year'),
-      dayjs(value).get('hour'),
-      dayjs(value).get('minute')
-    );
-    console.log(formik.values.title);
-    console.log(formik.values.text);
+    // console.log(
+    //   dayjs(value).get('month'),
+    //   dayjs(value).get('date'),
+    //   dayjs(value).get('year'),
+    //   dayjs(value).get('hour'),
+    //   dayjs(value).get('minute')
+    // );
+    // console.log(formik.values.title);
+    // console.log(formik.values.text);
     if (/\S/.test(formik.values.title) && /\S/.test(formik.values.text)) {
       const newTodo: ITodo = {
-        // id: dayjs(value).get('minute'),
-        id: Math.floor(Math.random() * 999),
+        id: Math.floor(Math.random() * 9999999),
         title: formik.values.title,
         text: formik.values.text,
         date: {
@@ -67,7 +66,6 @@ const CreateNewTaskField: FC = () => {
         completed: false,
       };
       dispatch(createNewTodo(newTodo));
-      console.log(newTodo);
       setValue(dayjs(new Date()));
     }
   };

@@ -7,7 +7,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/todos" element={<AllTodosPage />} />
+      <Route path="todos" element={<AllTodosPage />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import InputBase from '@mui/material/InputBase';
@@ -8,6 +8,7 @@ import {
   filterTodoList,
   liveSearchInputFilter,
 } from '../../store/actionCreators/todosAC';
+import { IInitialState } from '../../types/types';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -58,6 +59,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function SearchInput() {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState<string>('');
+  const {
+    filters: { completedFilter },
+  } = useSelector((state: IInitialState) => state.todos);
+  const changeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    console.log(e.target.value);
+    dispatch(
+      filterTodoList({
+        filterSearchInput: e.target.value,
+        filterCompleted: completedFilter,
+      })
+    );
+    dispatch(liveSearchInputFilter(e.target.value));
+  };
   return (
     <Box sx={{ margin: '20px auto' }}>
       <Search>
@@ -68,15 +83,7 @@ export default function SearchInput() {
           placeholder="Search by ToDo title:"
           inputProps={{ 'aria-label': 'search' }}
           value={inputValue}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            // console.log(e.target.value);
-            setInputValue(e.target.value);
-            console.log(e.target.value);
-            dispatch(
-              filterTodoList({ value: e.target.value, action: 'search' })
-            );
-            dispatch(liveSearchInputFilter(e.target.value));
-          }}
+          onChange={changeInputValue}
         />
       </Search>
     </Box>

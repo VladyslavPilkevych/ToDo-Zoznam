@@ -3,12 +3,13 @@ import AppRoutes from './Routes/Routes';
 import Header from './components/Header/Header';
 import { useDispatch } from 'react-redux';
 import { getAllTodos } from './store/actionCreators/todosAC';
+import './App.scss';
 
 function App() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllTodos());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getAllTodos());
+  // }, []);
   return (
     <div className="App">
       <Header />

@@ -9,10 +9,10 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { ITodo } from '../../types/types';
+import { ITodo, IInitialState } from '../../types/types';
 
-import { useDispatch } from 'react-redux';
-import { updateTodoList } from '../../store/actionCreators/todosAC';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeTodoCompleted, deleteTodo, filterTodoList } from '../../store/actionCreators/todosAC';
 import styles from './TodoTask.module.scss';
 
 interface TodoTaskProps {
@@ -28,16 +28,24 @@ const TodoTask: FC<TodoTaskProps> = ({ value }) => {
     completed,
   } = value;
   const dispatch = useDispatch();
-  //   const dispatch = useDispatch();
   const [checked, setChecked] = useState(completed);
+  const {
+    filters: { searchInputFilter, completedFilter },
+  } = useSelector((state: IInitialState) => state.todos);
   const updateTaskComplete = async (todoId: number) => {
     if (todoId) {
-      dispatch(updateTodoList({ id: todoId, action: 'completed' }));
+      dispatch(changeTodoCompleted(todoId));
+      dispatch(
+        filterTodoList({
+          filterSearchInput: searchInputFilter,
+          filterCompleted: completedFilter,
+        })
+      );
     }
     setChecked((e) => !e);
   };
   const deleteTask = async (todoId: number) => {
-    dispatch(updateTodoList({ id: todoId, action: 'delete' }));
+    dispatch(deleteTodo(todoId));
   };
   return (
     <div className={styles.todoTaskContainer}>

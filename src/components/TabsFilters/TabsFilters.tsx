@@ -1,28 +1,37 @@
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { filterTodoList, changeFilterCompleteTodos } from '../../store/actionCreators/todosAC';
+import {
+  filterTodoList,
+  changeFilterCompleteTodos,
+} from '../../store/actionCreators/todosAC';
+import { IInitialState } from '../../types/types';
 
 export default function TabsFilters() {
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(0);
+  const {
+    filters: { searchInputFilter },
+  } = useSelector((state: IInitialState) => state.todos);
+  // dispatch(
+  //   filterTodoList({
+  //     filterSearchInput: e.target.value,
+  //     filterCompleted: completedFilter,
+  //   })
+  // );
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    console.log(newValue);
+    // console.log(newValue);
     switch (newValue) {
-      case 0:
-        dispatch(filterTodoList({ value: 'all', action: 'complete' }));
-        break;
       case 1:
-        dispatch(filterTodoList({ value: false, action: 'complete' }));
+        dispatch(filterTodoList({ filterSearchInput: searchInputFilter, filterCompleted: false }));
         break;
       case 2:
-        dispatch(filterTodoList({ value: true, action: 'complete' }));
+        dispatch(filterTodoList({ filterSearchInput: searchInputFilter, filterCompleted: true }));
         break;
-
       default:
-        dispatch(filterTodoList({ value: 'all', action: 'complete' }));
+        dispatch(filterTodoList({ filterSearchInput: searchInputFilter, filterCompleted: null }));
     }
     dispatch(changeFilterCompleteTodos(newValue));
     setValue(newValue);

@@ -1,3 +1,4 @@
+// I for date in todo
 export interface IDate {
   month: number;
   date: number;
@@ -6,12 +7,7 @@ export interface IDate {
   minute: number;
 }
 
-export interface INewTaskSchemaTS {
-  title: string;
-  text: string;
-  date: Date;
-}
-
+// I for todo
 export interface ITodo {
   id: number;
   title: string;
@@ -20,24 +16,44 @@ export interface ITodo {
   completed: boolean;
 }
 
-export interface ITodosState {
+// I for creator todo inputs
+export interface INewTaskSchemaTS {
+  title: string;
+  text: string;
+  date: Date;
+}
+
+export interface IInitialState {
   todos: {
     allTodos: ITodo[];
     filteredTodoList: ITodo[];
-  };
-}
-export interface IFilterState {
-  todos: {
     filters: {
       searchInputFilter: string;
-      completedFilter: boolean;
+      completedFilter: boolean | null;
     };
   };
 }
 
+// ?
+// export interface ITodosState {
+//   todos: {
+//     allTodos: ITodo[];
+//     filteredTodoList: ITodo[];
+//   };
+// }
+
+// export interface IFilterState {
+//   todos: {
+//     filters: {
+//       searchInputFilter: string;
+//       completedFilter: boolean;
+//     };
+//   };
+// }
+
 export interface IData {
-  action: string;
-  value: number | string | boolean;
+  filterSearchInput: string;
+  filterCompleted: boolean | null;
 }
 
 export interface IUpdateData {
