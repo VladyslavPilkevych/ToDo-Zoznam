@@ -1,18 +1,19 @@
 import React, { FC, memo, useState, useEffect } from 'react';
-// import PropTypes from 'prop-types';
 
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
+import {
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Checkbox,
+  IconButton,
+  Container,
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { ITodo, IInitialState } from '../../types/types';
 
-import { useDispatch, useSelector } from 'react-redux';
-// import { changeTodoCompleted, deleteTodo, filterTodoList } from '../../store/actionCreators/todosAC';
+import { useSelector } from 'react-redux';
 import styles from './TodoTask.module.scss';
 import { useActions } from '../../hooks/useActions';
 
@@ -28,7 +29,6 @@ const TodoTask: FC<TodoTaskProps> = ({ value }) => {
     date: { month, date, year, hour, minute },
     completed,
   } = value;
-  // const dispatch = useDispatch();
   const { changeTodoCompleted, deleteTodo, filterTodoList } = useActions();
   const [checked, setChecked] = useState(completed);
   const {
@@ -37,29 +37,16 @@ const TodoTask: FC<TodoTaskProps> = ({ value }) => {
   useEffect(() => {
     setChecked(completed);
   }, [completed]);
-  useEffect(() => {
-    console.log(id);
-  }, [id]);
   const updateTaskComplete = async (todoId: number) => {
     if (todoId) {
-      // dispatch(changeTodoCompleted(todoId));
-      // changeTodoCompleted(todoId);
       changeTodoCompleted(value);
-      // dispatch(
-      //   filterTodoList({
-      //     filterSearchInput: searchInputFilter,
-      //     filterCompleted: completedFilter,
-      //   })
-      // );
       filterTodoList({
         filterSearchInput: searchInputFilter,
         filterCompleted: completedFilter,
       });
     }
-    // setChecked((e) => !e);
   };
   const deleteTask = async (todoId: number) => {
-    // dispatch(deleteTodo(todoId));
     deleteTodo(todoId);
     filterTodoList({
       filterSearchInput: searchInputFilter,
@@ -99,21 +86,22 @@ const TodoTask: FC<TodoTaskProps> = ({ value }) => {
               checked={checked}
               tabIndex={-1}
               disableRipple
-              //   inputProps={{ 'aria-labelledby': id }}
             />
           </ListItemIcon>
-          <ListItemText
-            className={`${styles.taskText} ${
-              completed && styles.taskTextChecked
-            }`}
-            primary={`Title: ${title}`}
-          />
-          <ListItemText
-            className={`${styles.taskText} ${
-              completed && styles.taskTextChecked
-            }`}
-            primary={`Text: ${text}`}
-          />
+          <Container sx={{display: 'blocks'}}>
+            <ListItemText
+              className={`${styles.taskText} ${
+                completed && styles.taskTextChecked
+              }`}
+              primary={`Title: ${title}`}
+            />
+            <ListItemText
+              className={`${styles.taskText} ${
+                completed && styles.taskTextChecked
+              }`}
+              primary={`Text: ${text}`}
+            />
+          </Container>
           <ListItemText
             className={`${styles.taskText} ${
               completed && styles.taskTextChecked

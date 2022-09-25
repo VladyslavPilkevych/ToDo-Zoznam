@@ -1,28 +1,23 @@
-import React, { FC, memo, useState, useEffect } from 'react';
-// import { useDispatch } from 'react-redux';
+import React, { FC, memo, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import { useFormik, FormikHelpers as FormikActions } from 'formik';
 import * as yup from 'yup';
-import TextField from '@mui/material/TextField';
+import { TextField, Button, Container } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import Button from '@mui/material/Button';
-import styles from './CreateNewTaskField.module.scss';
 import { ITodo, INewTaskSchemaTS } from '../../types/types';
-// import { createNewTodo } from '../../store/actionCreators/todosAC';
 import { useActions } from '../../hooks/useActions';
 
 type dateTypeJS = Date | Dayjs | null;
 
 const validationSchema: yup.SchemaOf<INewTaskSchemaTS> = yup.object({
-  title: yup.string().required('Title is required'),
-  text: yup.string().required('Text is required'),
+  title: yup.string().required('Title is required').max(35, 'Too Long Title!'),
+  text: yup.string().required('Text is required').max(250, 'Too Much Text!'),
   date: yup.date().required('Date is required'),
 });
 
 const CreateNewTaskField: FC = () => {
-  // const dispatch = useDispatch();
   const { createNewTodo } = useActions();
   const formik = useFormik({
     initialValues: {
@@ -35,7 +30,23 @@ const CreateNewTaskField: FC = () => {
       values: INewTaskSchemaTS,
       a: FormikActions<INewTaskSchemaTS>
     ) => {
-      // console.log(values);
+      if (/\S/.test(values.title) && /\S/.test(values.text)) {
+        const newTodo: ITodo = {
+          id: Math.floor(Math.random() * 9999999),
+          title: values.title,
+          text: values.text,
+          date: {
+            month: dayjs(value).get('month'),
+            date: dayjs(value).get('date'),
+            year: dayjs(value).get('year'),
+            hour: dayjs(value).get('hour'),
+            minute: dayjs(value).get('minute'),
+          },
+          completed: false,
+        };
+        createNewTodo(newTodo);
+        setValue(dayjs(new Date()));
+      }
       a.resetForm();
     },
   });
@@ -43,37 +54,10 @@ const CreateNewTaskField: FC = () => {
   const handleChange = (newValue: dateTypeJS) => {
     setValue(newValue);
   };
-  const handleSubmit = () => {
-    // console.log(
-    //   dayjs(value).get('month'),
-    //   dayjs(value).get('date'),
-    //   dayjs(value).get('year'),
-    //   dayjs(value).get('hour'),
-    //   dayjs(value).get('minute')
-    // );
-    // console.log(formik.values.title);
-    // console.log(formik.values.text);
-    if (/\S/.test(formik.values.title) && /\S/.test(formik.values.text)) {
-      const newTodo: ITodo = {
-        id: Math.floor(Math.random() * 9999999),
-        title: formik.values.title,
-        text: formik.values.text,
-        date: {
-          month: dayjs(value).get('month'),
-          date: dayjs(value).get('date'),
-          year: dayjs(value).get('year'),
-          hour: dayjs(value).get('hour'),
-          minute: dayjs(value).get('minute'),
-        },
-        completed: false,
-      };
-      // dispatch(createNewTodo(newTodo));
-      createNewTodo(newTodo);
-      setValue(dayjs(new Date()));
-    }
-  };
   return (
-    <div className={styles.createNewTaskContainer}>
+    <Container
+      sx={{ textAlign: 'center', justifyItems: 'center', marginTop: '20px' }}
+    >
       <form onSubmit={formik.handleSubmit}>
         <TextField
           sx={{
@@ -114,7 +98,6 @@ const CreateNewTaskField: FC = () => {
                 name="date"
                 variant="outlined"
                 error={formik.touched.date && Boolean(formik.errors.date)}
-                // helperText={formik.touched.date && formik.errors.date}
                 sx={{
                   width: 4 / 10,
                   marginTop: '10px',
@@ -132,12 +115,11 @@ const CreateNewTaskField: FC = () => {
             marginTop: '20px',
             marginLeft: '10px',
           }}
-          onClick={handleSubmit}
         >
           Submit
         </Button>
       </form>
-    </div>
+    </Container>
   );
 };
 

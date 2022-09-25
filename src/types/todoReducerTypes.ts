@@ -33,11 +33,6 @@ interface ICreateNewTodo {
 }
 interface IFilterTodoList {
   type: todosActionTypes.FILTER_TODO_LIST;
-  //   payload: {
-  //     filterAction: string;
-  //     value: string | boolean;
-  //   };
-//   payload: string | number | boolean;
   payload: {
     filterSearchInput: string;
     filterCompleted: boolean | null;

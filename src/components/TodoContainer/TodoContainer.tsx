@@ -1,9 +1,8 @@
 import React, { FC, memo, useState, useEffect } from 'react';
-
 import TodoTask from '../TodoTask/TodoTask';
-import { useDispatch, useSelector } from 'react-redux';
+import Container from '@mui/material/Container';
+import { useSelector } from 'react-redux';
 import { IInitialState, ITodo } from '../../types/types';
-import styles from './TodoContainer.module.scss';
 
 const TodoContainer: FC = () => {
   const [todoListByFilters, setTodoListByFilters] = useState<ITodo[]>([]);
@@ -19,14 +18,14 @@ const TodoContainer: FC = () => {
     }
   }, [allTodos, filteredTodoList, searchInputFilter, completedFilter]);
   return (
-    <div className={styles.wrapper}>
+    <Container sx={{ width: '80%', margin: '20px auto', paddingTop: '40px' }}>
       {todoListByFilters &&
         todoListByFilters.length > 0 &&
         todoListByFilters?.map((elem) => (
           <TodoTask value={elem} key={elem.id} />
         ))}
       {todoListByFilters && todoListByFilters.length === 0 && <p>No Items</p>}
-    </div>
+    </Container>
   );
 };
 

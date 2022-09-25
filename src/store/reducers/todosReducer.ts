@@ -1,12 +1,3 @@
-// import {
-//   GET_ALL_TODOS,
-//   CHANGE_TODO_COMPLETED,
-//   CREATE_NEW_TODO,
-//   FILTER_TODO_LIST,
-//   FILTER_SEARCH_INPUT,
-//   FILTER_COMPLETE_TODOS,
-//   DELETE_TODO,
-// } from '../actions/todosActions';
 import { ITodo } from '../../types/types';
 import { TodosAction, ITodoInitialState, todosActionTypes } from '../../types/todoReducerTypes';
 

@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { styled, alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import InputBase from '@mui/material/InputBase';
+import { Box, InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-// import {
-//   filterTodoList,
-//   liveSearchInputFilter,
-// } from '../../store/actionCreators/todosAC';
 import { IInitialState } from '../../types/types';
 import { useActions } from '../../hooks/useActions';
 
@@ -58,7 +53,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchInput() {
-  // const dispatch = useDispatch();
   const { filterTodoList, liveSearchInputFilter } = useActions();
   const [inputValue, setInputValue] = useState<string>('');
   const {
@@ -66,18 +60,10 @@ export default function SearchInput() {
   } = useSelector((state: IInitialState) => state.todos);
   const changeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-    console.log(e.target.value);
-    // dispatch(
-    //   filterTodoList({
-    //     filterSearchInput: e.target.value,
-    //     filterCompleted: completedFilter,
-    //   })
-    // );
     filterTodoList({
       filterSearchInput: e.target.value,
       filterCompleted: completedFilter,
     });
-    // dispatch(liveSearchInputFilter(e.target.value));
     liveSearchInputFilter(e.target.value);
   };
   return (
