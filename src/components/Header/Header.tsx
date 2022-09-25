@@ -16,6 +16,9 @@ const PageHeader = styled.header`
 const Image = styled.img`
   max-height: 80px;
   flex-basis: 10%;
+  @media ${(props) => props.theme.media.phone} {
+    display: none;
+  }
 `;
 
 const CustomContainer = styled.div`
@@ -24,15 +27,20 @@ const CustomContainer = styled.div`
   justify-content: flex-end;
   gap: 50px;
   margin-top: 30px;
+  @media ${(props) => props.theme.media.phone} {
+    gap: 10px;
+    flex-basis: 100%;
+    justify-content: space-evenly;
+  }
 `;
 
 const CustomNavLink = styled(NavLink)`
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 700;
   color: ${(props) => props.theme.colors.darkBlue};
   text-decoration: none;
-  cursor: 'pointer',
-  'text-decoration': 'none',
+  cursor: pointer,
+  text-decoration: none;
   :hover {
     color: ${(props) => props.theme.colors.hoverDarkBlue};
   }

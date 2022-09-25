@@ -8,6 +8,31 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { ITodo, INewTaskSchemaTS } from '../../types/types';
 import { useActions } from '../../hooks/useActions';
+import styled from 'styled-components';
+
+const CustomContainer = styled(Container)`
+  text-align: center;
+  justify-items: center;
+  margin-top: 20px;
+`;
+const CustomTextField = styled(TextField)`
+  width: 70%;
+  margin-top: 10px;
+  @media ${(props) => props.theme.media.phone} {
+    width: 90%;
+  }
+`;
+const CustomDataTextField = styled(TextField)`
+  width: 40%;
+  @media ${(props) => props.theme.media.phone} {
+    width: 70%;
+  }
+`;
+const CustomSubmitButton = styled(Button)`
+  @media ${(props) => props.theme.media.phone} {
+    width: 40%;
+  }
+`;
 
 type dateTypeJS = Date | Dayjs | null;
 
@@ -55,14 +80,10 @@ const CreateNewTaskField: FC = () => {
     setValue(newValue);
   };
   return (
-    <Container
-      sx={{ textAlign: 'center', justifyItems: 'center', marginTop: '20px' }}
-    >
+    <CustomContainer>
       <form onSubmit={formik.handleSubmit}>
-        <TextField
-          sx={{
-            width: 7 / 10,
-          }}
+        <CustomTextField
+          sx={{ marginTop: '10px' }}
           variant="outlined"
           id="title"
           name="title"
@@ -72,11 +93,8 @@ const CreateNewTaskField: FC = () => {
           error={formik.touched.title && Boolean(formik.errors.title)}
           helperText={formik.touched.title && formik.errors.title}
         />
-        <TextField
-          sx={{
-            width: 7 / 10,
-            marginTop: '10px',
-          }}
+        <CustomTextField
+          sx={{ marginTop: '10px' }}
           variant="outlined"
           id="text"
           name="text"
@@ -93,33 +111,27 @@ const CreateNewTaskField: FC = () => {
             value={value}
             onChange={handleChange}
             renderInput={(params) => (
-              <TextField
+              <CustomDataTextField
+                sx={{ marginTop: '10px' }}
                 label="Date"
                 name="date"
                 variant="outlined"
                 error={formik.touched.date && Boolean(formik.errors.date)}
-                sx={{
-                  width: 4 / 10,
-                  marginTop: '10px',
-                }}
                 {...params}
               />
             )}
           />
         </LocalizationProvider>
-        <Button
+        <CustomSubmitButton
+          sx={{ marginTop: '20px', marginLeft: '10px' }}
           color="primary"
           variant="contained"
           type="submit"
-          sx={{
-            marginTop: '20px',
-            marginLeft: '10px',
-          }}
         >
           Submit
-        </Button>
+        </CustomSubmitButton>
       </form>
-    </Container>
+    </CustomContainer>
   );
 };
 

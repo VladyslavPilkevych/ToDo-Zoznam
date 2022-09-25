@@ -3,6 +3,15 @@ import { useSelector } from 'react-redux';
 import { Tabs, Tab, Box } from '@mui/material';
 import { IInitialState } from '../../types/types';
 import { useActions } from '../../hooks/useActions';
+import { theme } from '../../assets/styles/styles';
+import styled from 'styled-components';
+
+const CustomTabs = styled(Tabs)`
+  @media ${(props) => props.theme.media.phone} {
+    width: 100%;
+    padding-left: 10%;
+  }
+`;
 
 export default function TabsFilters() {
   const { filterTodoList, changeFilterCompleteTodos } = useActions();
@@ -38,23 +47,25 @@ export default function TabsFilters() {
 
   return (
     <Box sx={{ width: '50%', marginTop: '10px' }}>
-      <Tabs
+      <CustomTabs
         onChange={handleChange}
         value={value}
         aria-label="Tabs where selection follows focus"
         selectionFollowsFocus
-        TabIndicatorProps={{ style: { backgroundColor: '#05386B' } }}
+        TabIndicatorProps={{
+          style: { backgroundColor: theme.colors.darkBlue },
+        }}
         sx={{
           paddingLeft: '40%',
           '& button': { fontSize: '14px', fontWeight: '700' },
-          '& button.Mui-selected': { color: '#05386B' },
-          '& button:focus': { color: '#05386B' },
+          '& button.Mui-selected': { color: theme.colors.darkBlue },
+          '& button:focus': { color: theme.colors.darkBlue },
         }}
       >
         <Tab label="All" />
         <Tab label="Active" />
         <Tab label="Completed" />
-      </Tabs>
+      </CustomTabs>
     </Box>
   );
 }

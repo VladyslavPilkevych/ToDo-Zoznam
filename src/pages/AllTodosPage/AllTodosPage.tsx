@@ -3,16 +3,25 @@ import Container from '@mui/material/Container';
 import TabsFilters from '../../components/TabsFilters/TabsFilters';
 import SearchInput from '../../components/SearchInput/SearchInput';
 import TodoContainer from '../../components/TodoContainer/TodoContainer';
+import styled from 'styled-components';
+
+const CustomFilterContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  @media ${(props) => props.theme.media.phone} {
+    display: block;
+  }
+`;
 
 function AllTodosPage() {
   useEffect(() => {}, []);
 
   return (
     <Container sx={{ display: 'block' }}>
-      <Container sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+      <CustomFilterContainer>
         <TabsFilters />
         <SearchInput />
-      </Container>
+      </CustomFilterContainer>
       <TodoContainer />
     </Container>
   );
