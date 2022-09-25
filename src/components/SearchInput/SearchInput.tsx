@@ -1,42 +1,39 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { styled, alpha } from '@mui/material/styles';
+import { styled as muiStyled } from '@mui/material/styles';
 import { Box, InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { IInitialState } from '../../types/types';
 import { useActions } from '../../hooks/useActions';
+import styled from 'styled-components';
+import { theme as globalColorsTheme } from '../../assets/styles/styles';
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  float: 'right',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto',
-  },
-}));
+const Search = styled.div`
+  position: relative,
+  backgroundColor: ${(props) => props.theme.colors.light};
+  float: right;
+  :hover {
+    backgroundColor: ${(props) => props.theme.colors.pinkLight};
+  }
+`;
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  color: '#EDF5E1',
-  zIndex: 2,
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
+const SearchIconWrapper = styled.div`
+  padding: 8px 13px;
+  color: ${(props) => props.theme.colors.creamWhite};
+  z-index: 2;
+  position: absolute;
+  pointerevents: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: '#EDF5E1',
+const StyledInputBase = muiStyled(InputBase)(({ theme }) => ({
+  color: globalColorsTheme.colors.creamWhite,
   borderRadius: '50px',
-  backgroundColor: '#379683',
+  backgroundColor: globalColorsTheme.colors.swampGreen,
   '&:hover': {
-    backgroundColor: '#287a69',
+    backgroundColor: globalColorsTheme.colors.swampGreen2,
   },
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),

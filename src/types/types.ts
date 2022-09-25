@@ -35,3 +35,19 @@ export interface IData {
   filterSearchInput: string;
   filterCompleted: boolean | null;
 }
+
+export interface ITheme {
+  colors: {
+    creamWhite: string;
+    light: string;
+    pinkLight: string;
+    swampGreen: string;
+    swampGreen2: string;
+    darkBlue: string;
+    hoverDarkBlue: string;
+  },
+  media: {
+    phone: string;
+    tablet: string;
+  },
+}

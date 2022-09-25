@@ -14,8 +14,27 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ITodo, IInitialState } from '../../types/types';
 
 import { useSelector } from 'react-redux';
-import styles from './TodoTask.module.scss';
+import styled from 'styled-components';
 import { useActions } from '../../hooks/useActions';
+
+const CustomWrapperContainer = styled.div`
+  width: 100%;
+  background-color: ${(props) => props.theme.colors.creamWhite};
+  border: 1px solid ${(props) => props.theme.colors.darkBlue};
+`;
+
+const CustomListItemText = styled(ListItemText)`
+  font-size: 16px;
+  font-weight: 400;
+`;
+const checkedListItemTextStyle = {
+  textDecoration: 'line-through',
+  color: 'grey',
+  fontStyle: 'italic',
+};
+const listItemTextStyle = {
+  color: 'black',
+};
 
 interface TodoTaskProps {
   value: ITodo;
@@ -54,7 +73,7 @@ const TodoTask: FC<TodoTaskProps> = ({ value }) => {
     });
   };
   return (
-    <div className={styles.todoTaskContainer}>
+    <CustomWrapperContainer>
       <ListItem
         sx={{
           width: 1 / 1,
@@ -88,29 +107,26 @@ const TodoTask: FC<TodoTaskProps> = ({ value }) => {
               disableRipple
             />
           </ListItemIcon>
-          <Container sx={{display: 'blocks'}}>
-            <ListItemText
-              className={`${styles.taskText} ${
-                completed && styles.taskTextChecked
-              }`}
-              primary={`Title: ${title}`}
-            />
-            <ListItemText
-              className={`${styles.taskText} ${
-                completed && styles.taskTextChecked
-              }`}
-              primary={`Text: ${text}`}
-            />
+          <Container sx={{ display: 'blocks' }}>
+            <CustomListItemText
+              style={checked ? checkedListItemTextStyle : listItemTextStyle}
+            >
+              {`Title: ${title}`}
+            </CustomListItemText>
+            <CustomListItemText
+              style={checked ? checkedListItemTextStyle : listItemTextStyle}
+            >
+              {`Text: ${text}`}
+            </CustomListItemText>
           </Container>
-          <ListItemText
-            className={`${styles.taskText} ${
-              completed && styles.taskTextChecked
-            }`}
-            primary={`month: ${month}, date: ${date}, year: ${year}, hour: ${hour}, minute: ${minute}`}
-          />
+          <CustomListItemText
+            style={checked ? checkedListItemTextStyle : listItemTextStyle}
+          >
+            {`month: ${month}, date: ${date}, year: ${year}, hour: ${hour}, minute: ${minute}`}
+          </CustomListItemText>
         </ListItemButton>
       </ListItem>
-    </div>
+    </CustomWrapperContainer>
   );
 };
 
