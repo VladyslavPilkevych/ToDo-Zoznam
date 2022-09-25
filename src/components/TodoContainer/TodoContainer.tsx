@@ -3,6 +3,16 @@ import TodoTask from '../TodoTask/TodoTask';
 import Container from '@mui/material/Container';
 import { useSelector } from 'react-redux';
 import { IInitialState, ITodo } from '../../types/types';
+import styled from 'styled-components';
+
+const CustomTodosContainer = styled(Container)`
+  width: 80%;
+  margin: 20px auto;
+  padding-top: 40px;
+  @media ${(props) => props.theme.media.phone} {
+    width: 95%;
+  }
+`;
 
 const TodoContainer: FC = () => {
   const [todoListByFilters, setTodoListByFilters] = useState<ITodo[]>([]);
@@ -18,14 +28,14 @@ const TodoContainer: FC = () => {
     }
   }, [allTodos, filteredTodoList, searchInputFilter, completedFilter]);
   return (
-    <Container sx={{ width: '80%', margin: '20px auto', paddingTop: '40px' }}>
+    <CustomTodosContainer>
       {todoListByFilters &&
         todoListByFilters.length > 0 &&
         todoListByFilters?.map((elem) => (
           <TodoTask value={elem} key={elem.id} />
         ))}
       {todoListByFilters && todoListByFilters.length === 0 && <p>No Items</p>}
-    </Container>
+    </CustomTodosContainer>
   );
 };
 

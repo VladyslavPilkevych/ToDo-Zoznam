@@ -6,10 +6,12 @@ import { useActions } from '../../hooks/useActions';
 import { theme } from '../../assets/styles/styles';
 import styled from 'styled-components';
 
-const CustomTabs = styled(Tabs)`
-  @media ${(props) => props.theme.media.phone} {
+const CustomBox = styled(Box)`
+  padding-left: 10%;
+  width: 50%;
+  margintop: '10px';
+  @media ${(props) => props.theme.media.notLaptop} {
     width: 100%;
-    padding-left: 10%;
   }
 `;
 
@@ -46,8 +48,13 @@ export default function TabsFilters() {
   };
 
   return (
-    <Box sx={{ width: '50%', marginTop: '10px' }}>
-      <CustomTabs
+    <CustomBox
+    // sx={{
+    //   width: '50%',
+    //   marginTop: '10px',
+    // }}
+    >
+      <Tabs
         onChange={handleChange}
         value={value}
         aria-label="Tabs where selection follows focus"
@@ -56,16 +63,18 @@ export default function TabsFilters() {
           style: { backgroundColor: theme.colors.darkBlue },
         }}
         sx={{
-          paddingLeft: '40%',
           '& button': { fontSize: '14px', fontWeight: '700' },
           '& button.Mui-selected': { color: theme.colors.darkBlue },
           '& button:focus': { color: theme.colors.darkBlue },
+          '@media max-width: 425px': {
+            paddingLeft: 0,
+          },
         }}
       >
         <Tab label="All" />
         <Tab label="Active" />
         <Tab label="Completed" />
-      </CustomTabs>
-    </Box>
+      </Tabs>
+    </CustomBox>
   );
 }

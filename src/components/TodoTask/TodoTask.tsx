@@ -21,6 +21,9 @@ const CustomWrapperContainer = styled.div`
   width: 100%;
   background-color: ${(props) => props.theme.colors.creamWhite};
   border: 1px solid ${(props) => props.theme.colors.darkBlue};
+  @media ${(props) => props.theme.media.phone} {
+    display: block;
+  }
 `;
 
 const CustomListItemText = styled(ListItemText)`
@@ -79,18 +82,16 @@ const TodoTask: FC<TodoTaskProps> = ({ value }) => {
           width: 1 / 1,
         }}
         secondaryAction={
-          <>
-            <IconButton
-              sx={{
-                marginLeft: 2,
-              }}
-              edge="end"
-              aria-label="comments"
-              onClick={() => deleteTask(id)}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </>
+          <IconButton
+            sx={{
+              marginLeft: 2,
+            }}
+            edge="end"
+            aria-label="comments"
+            onClick={() => deleteTask(id)}
+          >
+            <DeleteIcon />
+          </IconButton>
         }
         disablePadding
       >

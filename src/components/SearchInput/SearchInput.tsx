@@ -8,6 +8,13 @@ import { useActions } from '../../hooks/useActions';
 import styled from 'styled-components';
 import { theme as globalColorsTheme } from '../../assets/styles/styles';
 
+const CustomBox = styled(Box)`
+  margin: 20px auto;
+  @media ${(props) => props.theme.media.notLaptop} {
+    margin: 5px auto;
+  }
+`;
+
 const Search = styled.div`
   position: relative,
   backgroundColor: ${(props) => props.theme.colors.light};
@@ -64,7 +71,7 @@ export default function SearchInput() {
     liveSearchInputFilter(e.target.value);
   };
   return (
-    <Box sx={{ margin: '20px auto' }}>
+    <CustomBox>
       <Search>
         <SearchIconWrapper>
           <SearchIcon />
@@ -76,6 +83,6 @@ export default function SearchInput() {
           onChange={changeInputValue}
         />
       </Search>
-    </Box>
+    </CustomBox>
   );
 }

@@ -8,7 +8,7 @@ import styled from 'styled-components';
 const CustomFilterContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
-  @media ${(props) => props.theme.media.phone} {
+  @media ${(props) => props.theme.media.notLaptop} {
     display: block;
   }
 `;

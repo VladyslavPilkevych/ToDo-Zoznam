@@ -49,5 +49,6 @@ export interface ITheme {
   media: {
     phone: string;
     tablet: string;
+    notLaptop: string;
   },
 }
