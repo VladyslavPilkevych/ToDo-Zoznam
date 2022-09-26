@@ -48,12 +48,7 @@ export default function TabsFilters() {
   };
 
   return (
-    <CustomBox
-    // sx={{
-    //   width: '50%',
-    //   marginTop: '10px',
-    // }}
-    >
+    <CustomBox>
       <Tabs
         onChange={handleChange}
         value={value}

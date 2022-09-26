@@ -1,5 +1,4 @@
 import React, { FC, memo, useState, useEffect } from 'react';
-
 import {
   ListItem,
   ListItemButton,
@@ -10,9 +9,7 @@ import {
   Container,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import { ITodo, IInitialState } from '../../types/types';
-
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useActions } from '../../hooks/useActions';

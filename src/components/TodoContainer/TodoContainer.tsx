@@ -13,6 +13,11 @@ const CustomTodosContainer = styled(Container)`
     width: 95%;
   }
 `;
+const NoItemsText = styled.p`
+  margin: 20px auto;
+  font-size: 25px;
+  font-weight: 700;
+`;
 
 const TodoContainer: FC = () => {
   const [todoListByFilters, setTodoListByFilters] = useState<ITodo[]>([]);
@@ -34,7 +39,7 @@ const TodoContainer: FC = () => {
         todoListByFilters?.map((elem) => (
           <TodoTask value={elem} key={elem.id} />
         ))}
-      {todoListByFilters && todoListByFilters.length === 0 && <p>No Items</p>}
+      {todoListByFilters && todoListByFilters.length === 0 && <NoItemsText>No Items</NoItemsText>}
     </CustomTodosContainer>
   );
 };
